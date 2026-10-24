@@ -1,0 +1,17 @@
+{
+  "name": "memo-ry-receiver",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun server.ts",
+    "install-agent": "bun install.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4",
+    "@types/qrcode": "^1.5.6"
+  }
+}
