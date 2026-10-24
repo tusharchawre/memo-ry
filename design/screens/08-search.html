@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Search</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;family=Noto+Sans+Devanagari:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F5F5F5}a:hover{color:#C7C7CC}
+mark{background:#3A3A3C;color:#FFFFFF;border-radius:3px;padding:0 2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #000000; color: #F5F5F5; font-family: 'Geist', 'Noto Sans Devanagari', sans-serif; display: flex; flex-direction: column">
+  <div style="padding: 18px 20px 0; display: flex; align-items: center; gap: 12px">
+    <label style="flex-grow: 1; min-height: 42px; padding: 0 12px; border-radius: 12px; background: #161616; color: #8E8E93; display: flex; align-items: center; gap: 10px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input value="money" aria-label="Search" style="border: 0; outline: 0; background: transparent; font-family: inherit; font-size: 16px; color: #F5F5F5; flex-grow: 1; min-width: 0">
+    </label>
+    <a href="Main.dc.html" style="font-size: 15px; color: #C7C7CC; text-decoration: none; min-height: 44px; display: flex; align-items: center">Cancel</a>
+  </div>
+
+  <div style="margin: 14px 20px 0; display: flex; gap: 18px; font-size: 14px; border-bottom: 1px solid #1F1F1F">
+    <div style="padding: 8px 0; font-weight: 500; border-bottom: 2px solid #F5F5F5; margin-bottom: -1px">All 5</div>
+    <div style="padding: 8px 0; color: #8E8E93">Lyrics 1</div>
+    <div style="padding: 8px 0; color: #8E8E93">Audio 1</div>
+    <div style="padding: 8px 0; color: #8E8E93">Files 2</div>
+    <div style="padding: 8px 0; color: #8E8E93">Folders 1</div>
+  </div>
+
+  <div style="flex-grow: 1; padding: 6px 20px 0; display: flex; flex-direction: column; overflow: hidden">
+
+    <a href="Project.dc.html" style="display: flex; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid #141414; text-decoration: none">
+      <div style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #161616; color: #C7C7CC; display: flex; align-items: center; justify-content: center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"></path></svg>
+      </div>
+      <div style="min-width: 0">
+        <div style="font-size: 15px; font-weight: 500"><mark>Money</mark> Trees</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93; margin-top: 3px">good kid, m.A.A.d city/</div>
+      </div>
+    </a>
+
+    <a href="Lyrics.dc.html" style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #141414; text-decoration: none">
+      <div style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #161616; color: #C7C7CC; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4"></path><path d="M9 12h6M9 16h4"></path></svg>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+        <div style="font-size: 15px; font-weight: 500">lyrics.md <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93; font-weight: 400">· NOTE</span></div>
+        <div style="font-size: 14px; line-height: 1.45; color: #C7C7CC">double the vocal on the <mark>money</mark> trees hook</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93">Money Trees/</div>
+      </div>
+    </a>
+
+    <a href="Lyrics.dc.html" style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #141414; text-decoration: none">
+      <div style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #161616; color: #C7C7CC; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4"></path><path d="M9 12h6M9 16h4"></path></svg>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+        <div style="font-size: 15px; font-weight: 500">sample ideas.txt</div>
+        <div style="font-size: 14px; line-height: 1.45; color: #C7C7CC"><mark>money</mark> trees: chop the guitar loop, 72 bpm…</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93">Money Trees/</div>
+      </div>
+    </a>
+
+    <a href="Player.dc.html" style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #141414; text-decoration: none">
+      <div aria-hidden="true" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #161616; padding: 0 9px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="8"><div style="width: 2px; height: {{b}}; border-radius: 1px; background: #D1D1D6"></div></sc-for>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+        <div style="font-size: 15px; font-weight: 500">late idea <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93; font-weight: 400">· 0:22</span></div>
+        <div style="font-size: 14px; line-height: 1.45; color: #C7C7CC">Note: hum for the <mark>money</mark> trees outro</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93">Inbox/</div>
+      </div>
+    </a>
+
+    <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0">
+      <div style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; overflow: hidden">
+        <svg width="48" height="48" viewBox="0 0 100 100" role="img" aria-label="Cover image preview" style="display: block">
+          <rect width="100" height="100" fill="#2B1620"></rect>
+          <circle cx="63" cy="38" r="17" fill="#E8DCCB"></circle>
+          <path d="M0 72 Q22 60 46 70 T100 64 V100 H0z" fill="#120A0E"></path>
+        </svg>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+        <div style="font-size: 15px; font-weight: 500"><mark>money</mark>-trees-cover-draft.jpg</div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #8E8E93">Money Trees/</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 10px 20px 24px; font-size: 12px; color: #8E8E93; text-align: center">Searches names, lyrics and notes</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { bars: ['30%', '55%', '80%', '45%', '65%', '35%', '50%', '25%'] };
+  }
+}
+</script>
+</body>
+</html>

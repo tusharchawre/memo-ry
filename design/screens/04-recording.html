@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recording</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F5F5F5}a:hover{color:#C7C7CC}
+@keyframes rec{0%,100%{opacity:1}50%{opacity:.25}}
+.rec{animation:rec 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.rec{animation:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #000000; color: #F5F5F5; font-family: 'Geist', sans-serif; display: flex; flex-direction: column">
+  <div style="padding: 10px 12px 0; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center">
+    <a href="Project.dc.html" aria-label="Cancel recording" style="width: 44px; height: 44px; color: #8E8E93; display: flex; align-items: center; justify-content: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </a>
+    <div style="text-align: center; font-size: 13px; color: #8E8E93">Recording into <span style="color: #F5F5F5">Money Trees</span></div>
+    <div></div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 48px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #FF5A52"><span class="rec" style="width: 8px; height: 8px; border-radius: 999px; background: #FF5A52"></span>REC</div>
+      <div style="font-size: 72px; font-weight: 300; letter-spacing: -2px; font-variant-numeric: tabular-nums">0:07</div>
+    </div>
+
+    <div role="img" aria-label="Live waveform of the recording so far" style="position: relative; height: 140px; padding: 0 0 0 20px; display: flex; align-items: center; gap: 3px; overflow: hidden">
+      <sc-for list="{{bars}}" as="b" hint-placeholder-count="60"><div style="width: 3px; flex-shrink: 0; height: {{b.h}}; border-radius: 2px; background: {{b.c}}"></div></sc-for>
+      <div style="position: absolute; left: 252px; top: 0; bottom: 0; width: 2px; background: #FF5A52"></div>
+    </div>
+  </div>
+
+  <div style="padding: 0 40px 44px; display: flex; justify-content: space-between; align-items: center">
+    <a href="Project.dc.html" style="width: 56px; height: 56px; border-radius: 999px; background: #161616; color: #C7C7CC; display: flex; align-items: center; justify-content: center; font-size: 13px; text-decoration: none" aria-label="Discard">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"></path></svg>
+    </a>
+    <a href="SaveMemo.dc.html" aria-label="Stop and save" style="width: 80px; height: 80px; border-radius: 999px; border: 3px solid #F5F5F5; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+      <span style="width: 30px; height: 30px; border-radius: 8px; background: #FF5A52"></span>
+    </a>
+    <button aria-label="Pause" style="width: 56px; height: 56px; border: 0; border-radius: 999px; background: #161616; color: #F5F5F5; display: flex; align-items: center; justify-content: center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1.5"></rect><rect x="14" y="4" width="5" height="16" rx="1.5"></rect></svg>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const bars = [];
+    for (let i = 0; i < 58; i++) {
+      if (i < 39) {
+        const v = Math.abs(Math.sin(i * 0.7 + 1.2) * 0.6 + Math.sin(i * 0.23 + 0.4) * 0.4);
+        bars.push({ h: Math.max(6, Math.round(v * 100)) + '%', c: '#F5F5F5' });
+      } else {
+        bars.push({ h: '3px', c: '#2C2C2E' });
+      }
+    }
+    return { bars };
+  }
+}
+</script>
+</body>
+</html>

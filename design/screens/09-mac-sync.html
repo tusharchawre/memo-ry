@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mac sync</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F5F5F5}a:hover{color:#C7C7CC}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #000000; color: #F5F5F5; font-family: 'Geist', sans-serif; display: flex; flex-direction: column">
+  <div style="padding: 10px 12px 0; display: flex; align-items: center">
+    <a href="Main.dc.html" style="min-height: 44px; padding: 0 8px; display: flex; align-items: center; gap: 2px; color: #8E8E93; font-size: 15px; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+      Library
+    </a>
+  </div>
+
+  <div style="flex-grow: 1; padding: 10px 20px 0; display: flex; flex-direction: column; gap: 26px; overflow: hidden">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 28px; font-weight: 600; letter-spacing: -0.6px">Mac</div>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 15px"><span style="width: 8px; height: 8px; border-radius: 999px; background: #2F9E5B"></span>Up to date · synced 2 min ago</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #1F1F1F; font-size: 15px">
+        <span style="color: #8E8E93">Device</span><span>MacBook Air</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #1F1F1F; font-size: 15px">
+        <span style="color: #8E8E93">Connection</span><span>Same Wi-Fi · Syncthing</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #1F1F1F; font-size: 15px">
+        <span style="color: #8E8E93">On the Mac</span><span style="font-family: 'Geist Mono', monospace; font-size: 13px">~/Music/Memo-ry</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F; font-size: 15px">
+        <span style="color: #8E8E93">Library size</span><span style="font-family: 'Geist Mono', monospace; font-size: 13px">48 files · 212 MB</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="font-size: 13px; color: #8E8E93">Needs you</div>
+      <div style="padding: 14px; border-radius: 16px; background: #161616; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-size: 15px; line-height: 1.4"><span style="font-family: 'Geist Mono', monospace; font-size: 13px">chords.pdf</span> was deleted on the Mac. Delete it here too?</div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <button style="min-height: 42px; border: 0; border-radius: 999px; background: #2C2C2E; color: #F5F5F5; font-family: inherit; font-size: 14px">Keep</button>
+          <button style="min-height: 42px; border: 0; border-radius: 999px; background: #F5F5F5; color: #000000; font-family: inherit; font-size: 14px; font-weight: 500">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 13px; color: #8E8E93; padding-bottom: 6px">Recent</div>
+      <sc-for list="{{activity}}" as="a" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 8px 0">
+          <div style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 999px; background: #161616; color: #C7C7CC; display: flex; align-items: center; justify-content: center; font-size: 13px" aria-label="{{a.dirLabel}}">{{a.dir}}</div>
+          <div style="flex-grow: 1; min-width: 0">
+            <div style="font-family: 'Geist Mono', monospace; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{a.file}}</div>
+            <div style="font-size: 12px; color: #8E8E93">{{a.folder}}</div>
+          </div>
+          <div style="font-size: 12px; color: #8E8E93">{{a.when}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const up = '↑', down = '↓';
+    return {
+      activity: [
+        { dir: up, dirLabel: 'Sent to Mac', file: '2026-10-24 hook melody.m4a', folder: 'Money Trees', when: '2m' },
+        { dir: up, dirLabel: 'Sent to Mac', file: 'lyrics.md', folder: 'Money Trees', when: '2m' },
+        { dir: down, dirLabel: 'From Mac', file: 'beat-v2.mid', folder: 'Money Trees', when: '1h' },
+        { dir: down, dirLabel: 'From Mac', file: 'rough mix v3.wav', folder: 'DAMN.', when: 'Thu' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
