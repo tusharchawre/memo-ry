@@ -24,6 +24,7 @@ mkdirSync(join(app, 'Contents', 'MacOS'), { recursive: true });
 mkdirSync(join(app, 'Contents', 'Resources'), { recursive: true });
 
 run(['bun', 'build', '--compile', '--minify', 'server.ts', '--outfile', join(app, 'Contents', 'Resources', 'memo-ry-receiver')]);
+for (const name of ['AppIcon.icns', 'menubar.png', 'menubar@2x.png']) cpSync(join(dir, 'app', 'Resources', name), join(app, 'Contents', 'Resources', name));
 run(['swiftc', '-O', '-target', 'arm64-apple-macos13.0', 'app/main.swift', '-o', join(app, 'Contents', 'MacOS', 'MemoryReceiver')]);
 
 writeFileSync(
@@ -35,6 +36,7 @@ writeFileSync(
   <key>CFBundleName</key><string>${APP_NAME}</string>
   <key>CFBundleDisplayName</key><string>${APP_NAME}</string>
   <key>CFBundleIdentifier</key><string>${BUNDLE_ID}</string>
+  <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundleExecutable</key><string>MemoryReceiver</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>1.0</string>
@@ -54,9 +56,12 @@ console.log(`Built ${app}`);
 if (process.argv.includes('--install')) {
   const dest = join(homedir(), 'Applications', `${APP_NAME}.app`);
   Bun.spawnSync(['pkill', '-x', 'MemoryReceiver']);
+  Bun.spawnSync(['pkill', '-x', 'memo-ry-receiver']);
+  Bun.sleepSync(1000);
   mkdirSync(join(homedir(), 'Applications'), { recursive: true });
   rmSync(dest, { recursive: true, force: true });
   cpSync(app, dest, { recursive: true, verbatimSymlinks: true });
+  Bun.sleepSync(500);
   run(['open', dest]);
-  console.log(`Installed ${dest}. It is in the menu bar (waveform icon) and starts at login.`);
+  console.log(`Installed ${dest}. It is in the menu bar (Memo-ry icon) and starts at login.`);
 }

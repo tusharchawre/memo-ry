@@ -61,6 +61,14 @@
           "microphonePermission": false,
           "recordAudioAndroid": false
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
       ]
     ],
     "experiments": {

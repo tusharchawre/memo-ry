@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var restarts = 0
     private var lastLine = ""
     private var lastAt: Date?
+    private let termSource = DispatchSource.makeSignalSource(signal: SIGTERM, queue: .main)
     private let stateItem = NSMenuItem(title: "Starting…", action: nil, keyEquivalent: "")
     private let lastItem = NSMenuItem(title: "No files yet", action: nil, keyEquivalent: "")
     private let loginItem = NSMenuItem(title: "Start at login", action: #selector(toggleLogin), keyEquivalent: "")
@@ -18,7 +19,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        let image = NSImage(systemSymbolName: "waveform", accessibilityDescription: "Memo-ry")
+        // The Memo-ry mark as a template image (design/logo/render.ts); macOS tints it for light/dark menu bars.
+        let image = Bundle.main.image(forResource: "menubar") ?? NSImage(systemSymbolName: "waveform", accessibilityDescription: "Memo-ry")
+        image?.size = NSSize(width: 18, height: 18)
         image?.isTemplate = true
         statusItem.button?.image = image
 
@@ -45,6 +48,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             try? SMAppService.mainApp.register()
         }
         refreshLoginItem()
+        // A plain `kill`/logout sends SIGTERM, which skips applicationWillTerminate: stop the server first.
+        signal(SIGTERM, SIG_IGN)
+        termSource.setEventHandler { [weak self] in self?.quit() }
+        termSource.resume()
         startServer()
     }
 
