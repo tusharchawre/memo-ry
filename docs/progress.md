@@ -33,7 +33,6 @@ Last session: 2026-10-24.
 ### Known issues / notes
 
 - **iOS build on this Mac**: the system CocoaPods (Ruby 2.6) crashes with `uninitialized constant ActiveSupport::LoggerThreadSafeLevel::Logger`. Workaround: prefix with `RUBYOPT="-rlogger"`, e.g. `RUBYOPT="-rlogger" bunx expo run:ios`. A permanent fix is `brew install cocoapods`.
-- Nothing is committed yet beyond the template's initial commit (the user hasn't asked for commits).
 - Imported audio has no peaks: tiles use a stable pseudo-waveform seeded by the file name.
 - Video tiles show a glyph, not a poster frame.
 - Search walks the whole library on each keystroke; fine for now, move to SQLite when it feels slow.
