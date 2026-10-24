@@ -159,8 +159,8 @@ const ACTIVITY: Record<ActivityKind, { glyph: string; label: string; verb: strin
 
 function SetUp({ onScan, onPaste }: { onScan: () => void; onPaste: () => void }) {
   const steps = [
-    'On the Mac, in the memo-ry folder: bun mac/install.ts (once; it starts with the Mac from then on).',
-    'Open localhost:7337/pair on the Mac.',
+    'On the Mac, open Memo-ry Receiver (install once: bun mac/build-app.ts --install). It lives in the menu bar and starts at login.',
+    'Click its waveform icon → Pair a phone.',
     'Tap Pair with Mac and scan the code. Both need the same Wi-Fi.',
   ];
   return (

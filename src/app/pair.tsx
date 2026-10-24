@@ -16,7 +16,7 @@ import { colors, layout } from '@/ui/tokens';
 export default function PairScreen() {
   const insets = useSafeAreaInsets();
   const [permission, requestPermission] = useCameraPermissions();
-  const [message, setMessage] = useState('Open localhost:7337/pair on the Mac and point the camera at the code.');
+  const [message, setMessage] = useState('On the Mac: menu-bar waveform icon → Pair a phone. Then point the camera at the code.');
   const busy = useRef(false);
   const lastBad = useRef('');
   const { code } = useLocalSearchParams<{ code?: string }>();
