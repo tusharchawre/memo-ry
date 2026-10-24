@@ -1,98 +1,115 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+// Library root (design/screens/01-library.html).
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { useFolder, useRecentFiles } from '@/library/hooks';
+import { baseName, createFolder, parentPath } from '@/library/library';
+import { IconButton } from '@/ui/button';
+import { Grid } from '@/ui/grid';
+import { LaptopIcon, PlusIcon, SearchIcon } from '@/ui/icons';
+import { openItem, useItemMenu } from '@/ui/item-actions';
+import { PromptSheet } from '@/ui/sheet';
+import { Text } from '@/ui/text';
+import { Tile } from '@/ui/tile';
+import { colors, layout } from '@/ui/tokens';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function LibraryScreen() {
+  const insets = useSafeAreaInsets();
+  const listing = useFolder('');
+  const recent = useRecentFiles(3);
+  const menu = useItemMenu();
+  const [newFolderOpen, setNewFolderOpen] = useState(false);
+  const [promptKey, setPromptKey] = useState(0);
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <View style={[styles.screen, { paddingTop: insets.top + 18 }]}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text variant="title">Library</Text>
+          <View style={{ flexDirection: 'row', gap: 6 }}>
+            <IconButton label="Mac sync" size={40} onPress={() => router.push('/sync')}>
+              <LaptopIcon />
+              <View style={styles.syncDot} />
+            </IconButton>
+            <IconButton
+              label="New folder"
+              size={40}
+              background={colors.text}
+              onPress={() => {
+                setPromptKey((k) => k + 1);
+                setNewFolderOpen(true);
+              }}
+            >
+              <PlusIcon color={colors.onLight} />
+            </IconButton>
+          </View>
+        </View>
+
+        <Pressable onPress={() => router.push('/search')} accessibilityRole="search" style={styles.search}>
+          <SearchIcon />
+          <Text variant="body" style={{ color: colors.muted }}>
+            Search
+          </Text>
+        </Pressable>
+
+        <View style={{ gap: 12 }}>
+          <View style={styles.rowBetween}>
+            <Text variant="label">Folders</Text>
+            <Text variant="label">Recent ↓</Text>
+          </View>
+          <Grid items={listing.folders} render={(f) => <Tile item={f} onPress={() => openItem(f)} onLongPress={f.isInbox ? undefined : () => menu.open(f)} />} />
+        </View>
+
+        {recent.length > 0 ? (
+          <View style={{ gap: 12 }}>
+            <Text variant="label">Recent files</Text>
+            <Grid
+              items={recent}
+              render={(f) => <Tile item={f} subtitle={songOf(f.path)} onPress={() => openItem(f)} onLongPress={() => menu.open(f)} />}
+            />
+          </View>
+        ) : null}
+      </ScrollView>
+
+      <View style={[styles.footer, { paddingBottom: insets.bottom + 12 }]}>
+        <View style={styles.footerDot} />
+        <Text variant="small">Files sync to the Mac with Syncthing</Text>
+      </View>
+
+      <PromptSheet
+        key={promptKey}
+        visible={newFolderOpen}
+        title="New folder"
+        placeholder="Song or album name"
+        confirmLabel="Create"
+        onClose={() => setNewFolderOpen(false)}
+        onSubmit={(name) => {
+          setNewFolderOpen(false);
+          const path = createFolder('', name);
+          router.push({ pathname: '/folder', params: { path } });
+        }}
+      />
+      {menu.element}
+    </View>
   );
 }
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
+/** The song folder a file belongs to: "Money Trees/recordings/x.m4a" -> "Money Trees". */
+function songOf(path: string): string {
+  let folder = parentPath(path);
+  if (['recordings', 'files'].includes(baseName(folder))) folder = parentPath(folder);
+  return baseName(folder) || 'Library';
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
+  screen: { flex: 1, backgroundColor: colors.background },
+  content: { paddingHorizontal: layout.screenX, paddingBottom: 24, gap: 18 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  search: { minHeight: 42, paddingHorizontal: 14, borderRadius: 12, backgroundColor: colors.tile, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  syncDot: { position: 'absolute', top: 9, right: 8, width: 7, height: 7, borderRadius: 999, backgroundColor: colors.synced, borderWidth: 2, borderColor: colors.background },
+  footer: { paddingTop: 10, paddingHorizontal: layout.screenX, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, borderTopWidth: 1, borderTopColor: colors.hairline },
+  footerDot: { width: 6, height: 6, borderRadius: 999, backgroundColor: colors.synced },
 });

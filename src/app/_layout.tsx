@@ -1,18 +1,57 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { GeistMono_400Regular } from '@expo-google-fonts/geist-mono/400Regular';
+import { GeistMono_500Medium } from '@expo-google-fonts/geist-mono/500Medium';
+import { Geist_300Light } from '@expo-google-fonts/geist/300Light';
+import { Geist_400Regular } from '@expo-google-fonts/geist/400Regular';
+import { Geist_500Medium } from '@expo-google-fonts/geist/500Medium';
+import { Geist_600SemiBold } from '@expo-google-fonts/geist/600SemiBold';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { ensureLibrary } from '@/library/library';
+import { seedSampleLibrary } from '@/library/seed';
+import { colors } from '@/ui/tokens';
 
 SplashScreen.preventAutoHideAsync();
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Geist_300Light,
+    Geist_400Regular,
+    Geist_500Medium,
+    Geist_600SemiBold,
+    GeistMono_400Regular,
+    GeistMono_500Medium,
+  });
+  // Synchronous file I/O, once, before the first screen reads the library.
+  const [libraryReady] = useState(() => {
+    ensureLibrary();
+    if (__DEV__) seedSampleLibrary();
+    return true;
+  });
+
+  const ready = fontsLoaded && libraryReady;
+  useEffect(() => {
+    if (ready) SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) return null;
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <StatusBar style="light" />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background }, animation: 'slide_from_right' }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="folder" />
+        <Stack.Screen name="lyrics" />
+        <Stack.Screen name="player" />
+        <Stack.Screen name="search" options={{ animation: 'fade' }} />
+        <Stack.Screen name="sync" />
+        <Stack.Screen name="record" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom', gestureEnabled: false }} />
+      </Stack>
+    </SafeAreaProvider>
   );
 }
