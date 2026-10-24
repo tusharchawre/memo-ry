@@ -11,6 +11,7 @@ import { Grid } from '@/ui/grid';
 import { LaptopIcon, PlusIcon, SearchIcon } from '@/ui/icons';
 import { openItem, useItemMenu } from '@/ui/item-actions';
 import { PromptSheet } from '@/ui/sheet';
+import { StatusDot, useSyncSummary } from '@/ui/sync-status';
 import { Text } from '@/ui/text';
 import { Tile } from '@/ui/tile';
 import { colors, layout } from '@/ui/tokens';
@@ -20,6 +21,7 @@ export default function LibraryScreen() {
   const listing = useFolder('');
   const recent = useRecentFiles(3);
   const menu = useItemMenu();
+  const sync = useSyncSummary();
   const [newFolderOpen, setNewFolderOpen] = useState(false);
   const [promptKey, setPromptKey] = useState(0);
 
@@ -29,9 +31,9 @@ export default function LibraryScreen() {
         <View style={styles.header}>
           <Text variant="title">Library</Text>
           <View style={{ flexDirection: 'row', gap: 6 }}>
-            <IconButton label="Mac sync" size={40} onPress={() => router.push('/sync')}>
+            <IconButton label={`Mac sync: ${sync.text}`} size={40} onPress={() => router.push('/sync')}>
               <LaptopIcon />
-              <View style={styles.syncDot} />
+              <View style={[styles.syncDot, { backgroundColor: sync.color }]} />
             </IconButton>
             <IconButton
               label="New folder"
@@ -74,8 +76,10 @@ export default function LibraryScreen() {
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + 12 }]}>
-        <View style={styles.footerDot} />
-        <Text variant="small">Mac sync: not set up yet</Text>
+        <StatusDot color={sync.color} size={6} />
+        <Text variant="small" numberOfLines={1}>
+          {sync.footer}
+        </Text>
       </View>
 
       <PromptSheet
@@ -111,5 +115,4 @@ const styles = StyleSheet.create({
   search: { minHeight: 42, paddingHorizontal: 14, borderRadius: 12, backgroundColor: colors.tile, flexDirection: 'row', alignItems: 'center', gap: 10 },
   syncDot: { position: 'absolute', top: 9, right: 8, width: 7, height: 7, borderRadius: 999, backgroundColor: colors.muted, borderWidth: 2, borderColor: colors.background },
   footer: { paddingTop: 10, paddingHorizontal: layout.screenX, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, borderTopWidth: 1, borderTopColor: colors.hairline },
-  footerDot: { width: 6, height: 6, borderRadius: 999, backgroundColor: colors.muted },
 });

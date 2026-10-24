@@ -16,6 +16,7 @@ export const colors = {
   barDim: '#3A3A3C',
   record: '#FF5A52',
   synced: '#2F9E5B',
+  warning: '#F5A524',
   onLight: '#000000',
 } as const;
 

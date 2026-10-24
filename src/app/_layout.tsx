@@ -13,6 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ensureLibrary } from '@/library/library';
 import { seedSampleLibrary } from '@/library/seed';
+import { startAutoSync } from '@/sync/engine';
 import { colors } from '@/ui/tokens';
 
 SplashScreen.preventAutoHideAsync();
@@ -35,7 +36,9 @@ export default function RootLayout() {
 
   const ready = fontsLoaded && libraryReady;
   useEffect(() => {
-    if (ready) SplashScreen.hideAsync();
+    if (!ready) return;
+    SplashScreen.hideAsync();
+    startAutoSync();
   }, [ready]);
 
   if (!ready) return null;
@@ -50,6 +53,7 @@ export default function RootLayout() {
         <Stack.Screen name="player" />
         <Stack.Screen name="search" options={{ animation: 'fade' }} />
         <Stack.Screen name="sync" />
+        <Stack.Screen name="pair" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="record" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom', gestureEnabled: false }} />
       </Stack>
     </SafeAreaProvider>
