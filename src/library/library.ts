@@ -465,3 +465,47 @@ export function libraryStats(): { files: number; bytes: number } {
   walk(root());
   return { files, bytes };
 }
+
+// ---------- sync support (src/sync/) ----------
+
+export type LibraryFile = { path: string; size: number; mtime: number };
+
+/** Every file in the library (dotfiles and dot-folders skipped), for the sync engine. */
+export function walkLibraryFiles(): LibraryFile[] {
+  const out: LibraryFile[] = [];
+  const walk = (dir: Directory, path: string) => {
+    for (const e of dir.list()) {
+      if (e.name.startsWith('.')) continue;
+      const p = joinPath(path, e.name);
+      if (e instanceof Directory) walk(e, p);
+      else out.push({ path: p, size: e.size ?? 0, mtime: Math.round(e.lastModified ?? 0) });
+    }
+  };
+  walk(root(), '');
+  return out;
+}
+
+/** The file at a library path (it may not exist yet). Parent folders are created. */
+export function libraryFile(path: string, { create = false } = {}): File {
+  if (create) ensureDir(dirAt(parentPath(path)));
+  return fileAt(path);
+}
+
+/** Delete a file and any folders it leaves empty (never the root or Inbox). */
+export function removeLibraryFile(path: string) {
+  const file = fileAt(path);
+  if (file.exists) file.delete();
+  let dir = parentPath(path);
+  while (dir && dir !== INBOX) {
+    const d = dirAt(dir);
+    if (!d.exists || d.list().some((e) => !e.name.startsWith('.'))) break;
+    d.delete();
+    dir = parentPath(dir);
+  }
+}
+
+/** A fresh scratch file outside the library, for downloads in progress. */
+export function scratchFile(): File {
+  const dir = ensureDir(new Directory(Paths.cache, 'memo-ry-sync'));
+  return new File(dir, `${Date.now()}-${Math.random().toString(36).slice(2)}.part`);
+}

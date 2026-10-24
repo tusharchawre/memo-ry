@@ -53,6 +53,14 @@
         {
           "photosPermission": "Memo-ry adds photos and videos you pick to a song folder."
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Memo-ry uses the camera once, to scan the pairing code on your Mac.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
       ]
     ],
     "experiments": {

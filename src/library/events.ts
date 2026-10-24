@@ -1,15 +1,19 @@
-// A tiny change bus: library writes call notifyLibraryChanged(), screens re-read via useLibraryVersion().
+// A tiny change bus: library writes call notifyLibraryChanged(), screens re-read via useLibraryVersion(),
+// and the sync engine listens to schedule a sync (src/sync/engine.ts).
 import { useSyncExternalStore } from 'react';
 
-let version = 0;
-const listeners = new Set<() => void>();
+type Listener = (fromSync: boolean) => void;
 
-export function notifyLibraryChanged() {
+let version = 0;
+const listeners = new Set<Listener>();
+
+/** `fromSync`: the change came from the sync engine itself, so it must not schedule another sync. */
+export function notifyLibraryChanged(fromSync = false) {
   version++;
-  for (const l of listeners) l();
+  for (const l of listeners) l(fromSync);
 }
 
-function subscribe(listener: () => void) {
+export function subscribeLibrary(listener: Listener) {
   listeners.add(listener);
   return () => {
     listeners.delete(listener);
@@ -17,5 +21,5 @@ function subscribe(listener: () => void) {
 }
 
 export function useLibraryVersion(): number {
-  return useSyncExternalStore(subscribe, () => version);
+  return useSyncExternalStore(subscribeLibrary, () => version);
 }
