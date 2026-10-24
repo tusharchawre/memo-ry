@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "bun server.ts",
-    "install-agent": "bun install.ts",
+    "build-app": "bun build-app.ts",
+    "install-app": "bun build-app.ts --install",
     "test": "bun test"
   },
   "dependencies": {
