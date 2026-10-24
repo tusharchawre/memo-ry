@@ -75,7 +75,7 @@ export default function LibraryScreen() {
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + 12 }]}>
         <View style={styles.footerDot} />
-        <Text variant="small">Files sync to the Mac with Syncthing</Text>
+        <Text variant="small">Mac sync: not set up yet</Text>
       </View>
 
       <PromptSheet
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   search: { minHeight: 42, paddingHorizontal: 14, borderRadius: 12, backgroundColor: colors.tile, flexDirection: 'row', alignItems: 'center', gap: 10 },
-  syncDot: { position: 'absolute', top: 9, right: 8, width: 7, height: 7, borderRadius: 999, backgroundColor: colors.synced, borderWidth: 2, borderColor: colors.background },
+  syncDot: { position: 'absolute', top: 9, right: 8, width: 7, height: 7, borderRadius: 999, backgroundColor: colors.muted, borderWidth: 2, borderColor: colors.background },
   footer: { paddingTop: 10, paddingHorizontal: layout.screenX, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, borderTopWidth: 1, borderTopColor: colors.hairline },
-  footerDot: { width: 6, height: 6, borderRadius: 999, backgroundColor: colors.synced },
+  footerDot: { width: 6, height: 6, borderRadius: 999, backgroundColor: colors.muted },
 });

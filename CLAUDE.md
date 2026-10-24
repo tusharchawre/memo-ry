@@ -1,6 +1,6 @@
 # Memo-ry
 
-Personal, offline songwriting workspace: a dark file explorer where each song is a folder holding lyrics, recordings and any files, synced to a Mac with Syncthing. One user.
+Personal, offline songwriting workspace: a dark file explorer where each song is a folder holding lyrics, recordings and any files, synced to a Mac by the app itself (a small receiver runs on the Mac). One user.
 
 ## Start here (handoff)
 
@@ -12,6 +12,7 @@ Personal, offline songwriting workspace: a dark file explorer where each song is
 ## Decisions already made (don't reopen)
 
 - No tags anywhere. No share-sheet import. No AI in v1.
+- **No third-party sync apps** (no Syncthing). Memo-ry syncs itself over Wi-Fi to a small Bun receiver in `mac/` (spec "Library location and sync").
 - Dark, minimal explorer look (Geist + Geist Mono). Not Focus Protocol's card style.
 - Files on disk are the source of truth; SQLite is only an index.
 - Mock/sample data in the app, seeds and screenshots: Kendrick Lamar album/song titles as folder names, lyrics as `[ verse 1 lyrics ]` placeholders. Never commit real copyrighted lyrics.

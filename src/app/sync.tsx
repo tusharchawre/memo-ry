@@ -1,5 +1,5 @@
 // Mac sync (design/screens/09-mac-sync.html). Milestone 1: where the library lives and how to sync it.
-// Live Syncthing status, the "Needs you" list and activity come in milestone 3.
+// Pairing, the sync engine, "Needs you" and activity: docs/spec.md "Library location and sync".
 import { useMemo } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,7 +22,7 @@ export default function SyncScreen() {
         <Text variant="title">Mac</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <View style={[styles.dot, { backgroundColor: colors.muted }]} />
-          <Text variant="body">Managed by Syncthing</Text>
+          <Text variant="body">Not paired yet</Text>
         </View>
       </View>
 
@@ -42,7 +42,7 @@ export default function SyncScreen() {
       <View style={{ gap: 8 }}>
         <Text variant="label">Set up</Text>
         <Text variant="body" style={{ color: colors.secondary, lineHeight: 22 }}>
-          Install Syncthing on the phone and the Mac, then share the folder above with the Mac and point it at ~/Music/Memo-ry. Both must be on the same Wi-Fi. Every song is a plain folder, so FL Studio opens the files directly.
+          Coming next: run the Memo-ry receiver on the Mac, scan its QR code here once, and every file syncs to ~/Music/Memo-ry over your Wi-Fi. No other app needed. Every song is a plain folder, so FL Studio opens the files directly.
         </Text>
       </View>
     </ScrollView>

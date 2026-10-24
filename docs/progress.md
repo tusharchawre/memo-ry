@@ -2,7 +2,7 @@
 
 Read this first, update it last. Newest notes at the top of each section.
 
-## Status: milestone 1 (spike) built, needs on-device testing
+## Status: milestone 1 (spike) done and tested on the phone in Expo Go
 
 Last session: 2026-10-24.
 
@@ -24,11 +24,10 @@ Last session: 2026-10-24.
 
 ### Next (in order)
 
-1. Test in **Expo Go** on the Android phone (`bunx expo start --go`); screenshot screens (`adb exec-out screencap -p`) and compare with `design/screens/`; fix gaps. No native builds until the app is feature-complete.
-2. **Spike check (needs the user):** Syncthing phone → Mac on the home Wi-Fi.
-3. **Android library location** (needs a native build, so after feature-complete): let the user pick `Music/Memo-ry` with `Directory.pickDirectoryAsync` (SAF) so Syncthing-Fork can see it; persist the URI; confirm read/write + expo-audio playback on SAF URIs (spec "Library location and sync"). Right now the library is in app-private Documents, which Syncthing on Android can't reach.
+1. Keep testing in **Expo Go** on the Android phone (`bunx expo start --go`); screenshot screens (`adb exec-out screencap -p`) and compare with `design/screens/`; fix gaps. No native builds until the app is feature-complete.
+2. **Sync (milestone 3 in the spec), the big one.** Syncthing is dropped: the user wants one app. Build per spec "Library location and sync": the Mac receiver in `mac/` (Bun HTTP server + launchd agent + pairing QR), pairing in the app (expo-camera QR scan), the sync engine (expo-sqlite state table, manifest diff, upload/download, keep-both conflicts, Needs-you for deletes), and the full Mac sync screen (`design/screens/09-mac-sync.html`). The library stays in app storage; no SAF picker needed.
 4. Milestone 2 leftovers: move items between folders, SQLite index (expo-sqlite) for Recent/Search, "New text file" in the Add sheet (mockup shows it; currently a "Lyrics" option), long-press menu on lyrics sections could also rename.
-5. Milestone 3: A–B loop region on the player, mini player while writing (needs a shared player outside screens), drafts UI for `lyrics.history/`, full Mac sync screen (Syncthing status, Needs you, activity), app icon/logo.
+5. Polish (milestone 4): A–B loop region on the player, mini player while writing (needs a shared player outside screens), drafts UI for `lyrics.history/`, app icon/logo.
 
 ### Known issues / notes
 

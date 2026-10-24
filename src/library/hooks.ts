@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useLibraryVersion } from './events';
 import { listFolder, recentFiles, type FolderListing, type Item } from './library';
 
-/** Re-read on focus too: Syncthing may have changed files while we were away. */
+/** Re-read on focus too: a sync may have changed files while we were away. */
 function useRefreshKey(): number {
   const version = useLibraryVersion();
   const [focusTick, setFocusTick] = useState(0);
