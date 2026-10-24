@@ -26,7 +26,7 @@ Personal, offline songwriting workspace: a dark file explorer where each song is
 
 - Expo SDK 58, TypeScript strict, expo-router (routes in `src/app/`).
 - expo-audio, expo-file-system (new `File`/`Directory`/`Paths` API, not `/legacy`), expo-sqlite, expo-document-picker, expo-image-picker, react-native-svg, Geist fonts via `@expo-google-fonts/*`.
-- Needs a dev build (`bunx expo run:ios` / `run:android`), not Expo Go.
+- **Develop in Expo Go** (`bunx expo start --go`; the phone is on the same Wi-Fi, Expo Go 58). Only use modules bundled in Expo Go. No native/dev builds until the app is feature-complete (user's call); then build an APK.
 
 ## Code layout
 

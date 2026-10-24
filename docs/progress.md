@@ -24,9 +24,9 @@ Last session: 2026-10-24.
 
 ### Next (in order)
 
-1. Run on the iOS simulator and an Android phone; screenshot each screen and compare with `design/screens/`; fix gaps.
+1. Test in **Expo Go** on the Android phone (`bunx expo start --go`); screenshot screens (`adb exec-out screencap -p`) and compare with `design/screens/`; fix gaps. No native builds until the app is feature-complete.
 2. **Spike check (needs the user):** Syncthing phone → Mac on the home Wi-Fi.
-3. **Android library location**: let the user pick `Music/Memo-ry` with `Directory.pickDirectoryAsync` (SAF) so Syncthing-Fork can see it; persist the URI; confirm read/write + expo-audio playback on SAF URIs (spec "Library location and sync"). Right now the library is in app-private Documents, which Syncthing on Android can't reach.
+3. **Android library location** (needs a native build, so after feature-complete): let the user pick `Music/Memo-ry` with `Directory.pickDirectoryAsync` (SAF) so Syncthing-Fork can see it; persist the URI; confirm read/write + expo-audio playback on SAF URIs (spec "Library location and sync"). Right now the library is in app-private Documents, which Syncthing on Android can't reach.
 4. Milestone 2 leftovers: move items between folders, SQLite index (expo-sqlite) for Recent/Search, "New text file" in the Add sheet (mockup shows it; currently a "Lyrics" option), long-press menu on lyrics sections could also rename.
 5. Milestone 3: A–B loop region on the player, mini player while writing (needs a shared player outside screens), drafts UI for `lyrics.history/`, full Mac sync screen (Syncthing status, Needs you, activity), app icon/logo.
 
