@@ -88,6 +88,7 @@ async function hashLocal(): Promise<Files> {
 
 async function download(p: store.Pairing, remotePath: string, localPath: string, expected: string): Promise<string> {
   const tmp = scratchFile();
+  let moved = false;
   try {
     await File.downloadFileAsync(fileUrl(p, remotePath), tmp, { headers: { Authorization: `Bearer ${p.token}` }, idempotent: true });
     const sha256 = await tmp.digest('SHA-256');
@@ -95,12 +96,14 @@ async function download(p: store.Pairing, remotePath: string, localPath: string,
     if (sha256 !== expected) throw new Error(`${remotePath} changed during download`);
     const dest = libraryFile(localPath, { create: true });
     if (dest.exists) dest.delete();
+    // moveSync re-points `tmp` at the destination, so it must not be cleaned up after this.
     tmp.moveSync(dest);
+    moved = true;
     const fresh = libraryFile(localPath);
     store.setHash(localPath, { size: fresh.size ?? 0, mtime: Math.round(fresh.lastModified ?? 0), sha256 });
     return sha256;
   } finally {
-    if (tmp.exists) tmp.delete();
+    if (!moved && tmp.exists) tmp.delete();
   }
 }
 
